@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hockey lesson mockup</title>
+    <link rel="stylesheet" href="../../theme.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Learn the whole ice</p>
+      <h1>Where should I go?</h1>
+      <section class="controls" aria-label="Possession">
+        <strong>Who has the puck?</strong>
+        <button class="blue">Blue</button><button>Loose puck</button><button>Orange</button>
+        <span class="spacer"></span>
+        <strong>Coach tools</strong>
+        <button id="markupButton">Markup mode</button><button disabled>Clear markup</button>
+      </section>
+      <section class="rink" aria-label="Rink layout preview">
+        <div class="blue player">LW</div>
+        <div class="orange player">RD</div>
+        <div class="puck"></div>
+        <p>Production app draws the full rink and twelve players on canvas.</p>
+      </section>
+      <section class="jobs">
+        <header>
+          <h2>What is my job?</h2>
+          <button id="teamButton">Showing Blue</button>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Where to go</th>
+              <th>Job now</th>
+              <th>Simple cue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>LW</th>
+              <td>Open ice above the puck</td>
+              <td>Give support without crowding the battle.</td>
+              <td>Stay available</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+main {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 2rem auto;
+}
+.eyebrow {
+  color: var(--muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+h1 {
+  margin: 0 0 1rem;
+  font-size: 3.5rem;
+  letter-spacing: -0.05em;
+}
+section {
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  padding: 1rem;
+}
+button {
+  min-height: var(--control-min-height);
+  margin-left: 0.35rem;
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+}
+button.blue,
+.player.blue {
+  background: var(--blue-team);
+  color: white;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.controls .spacer {
+  flex: 1;
+}
+.rink {
+  position: relative;
+  min-height: 330px;
+  overflow: hidden;
+  border: 5px solid #17324d;
+  border-radius: 4rem;
+  background: #f9fdff;
+  text-align: center;
+}
+.rink::before,
+.rink::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #2374ab;
+}
+.rink::before {
+  left: 37%;
+}
+.rink::after {
+  right: 37%;
+}
+.player {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-weight: 800;
+}
+.player.blue {
+  left: 55%;
+  top: 25%;
+}
+.player.orange {
+  right: 55%;
+  bottom: 25%;
+  background: var(--orange-team);
+  color: white;
+}
+.puck {
+  position: absolute;
+  left: 70%;
+  top: 44%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #15191d;
+}
+.rink p {
+  margin-top: 135px;
+  color: var(--muted);
+}
+.jobs header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}

@@ -1,0 +1,17 @@
+<canvas
+  #canvas
+  class="rink"
+  [class.markup-mode]="markupMode"
+  tabindex="0"
+  role="application"
+  [attr.aria-label]="
+    markupMode
+      ? 'Markup mode. Draw on the rink with a pointer.'
+      : statusLabel + '. Use the arrow keys to move between teaching areas.'
+  "
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="onPointerCancel()"
+  (keydown)="onKeyDown($event)"
+></canvas>

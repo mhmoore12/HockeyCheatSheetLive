@@ -1,0 +1,245 @@
+<header class="site-header">
+  <div class="eyebrow">Learn the whole ice</div>
+  <h1>Where should I go?</h1>
+  <p>
+    Move the puck, choose who has it, and watch every player find a helpful spot. Blue attacks
+    <strong>right</strong>; Orange attacks <strong>left</strong>.
+  </p>
+</header>
+
+<main>
+  <section class="lesson-controls" aria-labelledby="possession-heading">
+    <div>
+      <span class="control-label" id="possession-heading">Who has the puck?</span>
+      <div class="segmented" aria-label="Puck possession">
+        <button
+          type="button"
+          class="home-button"
+          [class.active]="puck().possession === 'home'"
+          [attr.aria-pressed]="puck().possession === 'home'"
+          (click)="setPossession('home')"
+        >
+          Blue
+        </button>
+        <button
+          type="button"
+          class="loose-button"
+          [class.active]="puck().possession === 'loose'"
+          [attr.aria-pressed]="puck().possession === 'loose'"
+          (click)="setPossession('loose')"
+        >
+          Loose puck
+        </button>
+        <button
+          type="button"
+          class="away-button"
+          [class.active]="puck().possession === 'away'"
+          [attr.aria-pressed]="puck().possession === 'away'"
+          (click)="setPossession('away')"
+        >
+          Orange
+        </button>
+      </div>
+    </div>
+
+    <div class="current-read">
+      <span class="control-label">Current lesson</span>
+      <strong>{{ possessionLabel(puck().possession) }}</strong>
+      <span>{{ areaLabel() }}</span>
+    </div>
+    <div class="markup-controls">
+      <span class="control-label">Coach tools</span>
+      <div class="tool-buttons">
+        <button
+          type="button"
+          class="markup-toggle"
+          [class.active]="markupMode()"
+          [attr.aria-pressed]="markupMode()"
+          (click)="toggleMarkupMode()"
+        >
+          Markup mode
+        </button>
+        <button type="button" [disabled]="!hasMarkup()" (click)="clearMarkup()">
+          Clear markup
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <p class="sr-only" aria-live="polite">{{ statusLabel() }}</p>
+
+  <section class="rink-card" aria-label="Interactive rink lesson">
+    <div class="rink-directions" aria-hidden="true">
+      <span><i class="direction-arrow left"></i> Orange attacks</span>
+      <span>Blue attacks <i class="direction-arrow right"></i></span>
+    </div>
+    <app-rink-canvas
+      [currentPlayers]="currentPlayers()"
+      [previousPlayers]="previousPlayers()"
+      [puck]="effectivePuck()"
+      [selectedPlayerId]="selectedPlayerId()"
+      [statusLabel]="statusLabel()"
+      [markupMode]="markupMode()"
+      [clearMarkupVersion]="clearMarkupVersion()"
+      (puckPreview)="previewPuck($event)"
+      (puckPreviewCancel)="cancelPuckPreview()"
+      (puckCommit)="commitPuck($event)"
+      (playerSelect)="selectPlayer($event)"
+      (markupAvailabilityChange)="hasMarkup.set($event)"
+    />
+    <div class="rink-footer">
+      <p>
+        <strong>Try it:</strong> Click or drag anywhere on the ice. Use arrow keys when the rink is
+        focused.
+      </p>
+      <div class="legend" aria-label="Rink legend">
+        <span><i class="dot home"></i> Blue</span>
+        <span><i class="dot away"></i> Orange</span>
+        <span><i class="dot puck"></i> Puck</span>
+        <span><i class="ghost-dot"></i> Previous spot</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="jobs-card" aria-labelledby="jobs-heading">
+    <div class="jobs-heading">
+      <div>
+        <div class="eyebrow">Read the play</div>
+        <h2 id="jobs-heading">What is my job?</h2>
+      </div>
+      <div class="team-tabs" role="tablist" aria-label="Team responsibilities">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="selectedTeam() === 'home'"
+          [class.active]="selectedTeam() === 'home'"
+          (click)="selectTeam('home')"
+        >
+          Blue team
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="selectedTeam() === 'away'"
+          [class.active]="selectedTeam() === 'away'"
+          (click)="selectTeam('away')"
+        >
+          Orange team
+        </button>
+      </div>
+    </div>
+
+    <div class="lesson-banner" [class.away]="selectedTeam() === 'away'">
+      <strong>{{ areaLabel() }}</strong>
+      <span>{{
+        activeScenario().phase === 'inPossession'
+          ? 'Attack together'
+          : activeScenario().phase === 'outOfPossession'
+            ? 'Defend together'
+            : 'Win it together'
+      }}</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">
+          Responsibilities for the
+          {{
+            teamName(selectedTeam())
+          }}
+          team
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Position</th>
+            <th scope="col">Where to go</th>
+            <th scope="col">Job now</th>
+            <th scope="col">Simple cue</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of responsibilities(); track item.role) {
+            <tr
+              [class.selected]="isSelectedRole(selectedTeam(), item.role)"
+              (click)="selectRole(selectedTeam(), item.role)"
+            >
+              <th scope="row">
+                <button
+                  type="button"
+                  class="role-button"
+                  (click)="selectRole(selectedTeam(), item.role)"
+                >
+                  <span class="role-chip" [class.away]="selectedTeam() === 'away'">{{
+                    item.role
+                  }}</span>
+                  <span class="role-name">{{
+                    item.role === 'LW'
+                      ? 'Left wing'
+                      : item.role === 'RW'
+                        ? 'Right wing'
+                        : item.role === 'C'
+                          ? 'Center'
+                          : item.role === 'LD'
+                            ? 'Left defense'
+                            : item.role === 'RD'
+                              ? 'Right defense'
+                              : 'Goalie'
+                  }}</span>
+                </button>
+              </th>
+              <td>{{ item.where }}</td>
+              <td>{{ item.job }}</td>
+              <td>
+                <strong>{{ item.cue }}</strong>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="sources-card">
+    <summary>About this lesson and its sources</summary>
+    <div>
+      <p>
+        Use this rink to learn how all six players work together. Move the puck, choose which team
+        has it, and see where each player should go next. These are starting points—listen to your
+        coach and adjust to what your teammates and opponents do.
+      </p>
+      <ul>
+        <li>
+          <a href="https://howtohockey.com/hockey-cheat-sheet/" target="_blank" rel="noreferrer"
+            >How To Hockey — Hockey Cheat Sheet</a
+          >, also supplied locally as the visual starting point.
+        </li>
+        <li>
+          <a
+            href="https://portal.usahockey.com/cx/vice-president/hockey-development/recommended_youth_hockey_program_structure.pdf"
+            target="_blank"
+            rel="noreferrer"
+            >USA Hockey — Recommended Program Structure by Age Group</a
+          >.
+        </li>
+        <li>
+          <a
+            href="https://www.hockeycanada.ca/en-ca/hockey-programs/coaching/under-11/coaches/skills"
+            target="_blank"
+            rel="noreferrer"
+            >Hockey Canada — U11 Skill Development and Progression</a
+          >.
+        </li>
+        <li>
+          <a
+            href="https://www.hockeycanada.ca/en-ca/hockey-programs/players/essentials/positions-skills/defence"
+            target="_blank"
+            rel="noreferrer"
+            >Hockey Canada — Developing Skilled Defence</a
+          >.
+        </li>
+      </ul>
+    </div>
+  </details>
+</main>
+
+<footer>Learn the role. Read the play. Help the team.</footer>

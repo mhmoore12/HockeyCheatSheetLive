@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.rink {
+  display: block;
+  width: 100%;
+  aspect-ratio: 200 / 85;
+  border-radius: 1.25rem;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+
+.rink:focus-visible {
+  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.55);
+}
+
+.rink.markup-mode {
+  cursor: cell;
+}

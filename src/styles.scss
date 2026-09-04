@@ -1,0 +1,52 @@
+:root {
+  --color-background: #edf4f7;
+  --color-surface: #ffffff;
+  --color-inset: #e8eff3;
+  --color-text: #152638;
+  --color-muted: #5a6c7c;
+  --color-border: #cfdae1;
+  --color-home: #1261a0;
+  --color-home-dark: #0a497c;
+  --color-home-soft: #e8f3fb;
+  --color-away: #c45100;
+  --color-away-dark: #8c3900;
+  --color-away-soft: #fff0e5;
+  --color-focus: #d89500;
+  --radius-lg: 1.1rem;
+  --shadow-card: 0 14px 38px rgba(25, 52, 73, 0.08);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(81, 159, 204, 0.14), transparent 32rem),
+    var(--color-background);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+button,
+canvas,
+a,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}

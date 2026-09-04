@@ -1,0 +1,12 @@
+:root {
+  --background: #edf4f7;
+  --surface: #ffffff;
+  --text: #152638;
+  --muted: #5a6c7c;
+  --border: #cfdae1;
+  --blue-team: #1261a0;
+  --orange-team: #c45100;
+  --focus: #d89500;
+  --radius-card: 1.1rem;
+  --control-min-height: 44px;
+}
